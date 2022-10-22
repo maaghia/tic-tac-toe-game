@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 
+let caseNbr = 0;
+
 function Square(props) {
     return (
       <button className="square" onClick={props.onClick}>
@@ -87,7 +89,8 @@ function Square(props) {
       const history = this.state.history;
       const current = history[this.state.stepNumber];
       const winner = calculateWinner(current.squares);
-  
+      
+
       const moves = history.map((step, move) => {
         const desc = move ?
           'Go to move #' + move :
@@ -102,8 +105,11 @@ function Square(props) {
       let status;
       if (winner) {
         status = "Winner: " + winner;
-      } else {
+      }else if(!winner && caseNbr==9){
+        status = "Game Over,Tie";
+      }else {
         status = "Next player: " + (this.state.xIsNext ? "X" : "O");
+        caseNbr ++;
       }
   
       return (
@@ -139,12 +145,14 @@ function Square(props) {
       [0, 4, 8],
       [2, 4, 6]
     ];
+    
     for (let i = 0; i < lines.length; i++) {
       const [a, b, c] = lines[i];
+      
       if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-        return squares[a];
-      }
-    }
+        return squares[a]; 
+      } 
+    } 
     return null;
   }
   
